@@ -1,0 +1,22 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Prietaisas jau sukonfig\u016bruotas",
+            "already_in_progress": "Tai jau konfig\u016bruojama. Prie\u0161 prad\u0117dami i\u0161 naujo, u\u017ebaikite esam\u0105 konfig\u016bracij\u0105.",
+            "no_devices_found": "Tinkle nerasta joki\u0173 prietais\u0173",
+            "not_supported": "Prietaisas nepalaikomas"
+        },
+        "flow_title": "{name}",
+        "step": {
+            "bluetooth_confirm": {
+                "description": "Ar norite nustatyti {name} ?"
+            },
+            "user": {
+                "data": {
+                    "address": "Prietaisas"
+                },
+                "description": "Pasirinkite prietais\u0105, kur\u012f norite nustatyti"
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Gailua dagoeneko konfiguratuta dago",
+            "no_devices_found": "Ez da sarean gailurik aurkitu"
+        },
+        "flow_title": "{name}",
+        "step": {
+            "user": {
+                "data": {
+                    "address": "Gailua"
+                }
+            }
+        }
+    }
+}

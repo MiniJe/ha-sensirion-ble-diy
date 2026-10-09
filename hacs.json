@@ -1,0 +1,5 @@
+{
+  "name": "Sensirion BLE (DIY gadgets)",
+  "render_readme": true,
+  "homeassistant": "2026.9.0"
+}

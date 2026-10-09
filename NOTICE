@@ -1,0 +1,11 @@
+Sensirion BLE (DIY gadgets) for Home Assistant
+
+This integration is a modified copy of the "sensirion_ble" integration of
+Home Assistant Core (https://github.com/home-assistant/core, Apache License
+2.0, Copyright Home Assistant Core contributors) and of the parser of the
+sensirion-ble library (https://github.com/akx/sensirion-ble).
+
+Changes: the advertisement parser was replaced by a table-driven one that
+covers the live-data sample types published by Sensirion at
+https://sensirion.github.io/ble-services/, and the sensor platform gained
+entities for VOC index, NOx index, formaldehyde and particulate matter.

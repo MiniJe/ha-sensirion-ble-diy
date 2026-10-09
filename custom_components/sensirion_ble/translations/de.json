@@ -1,0 +1,22 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Ger\u00e4t ist bereits konfiguriert",
+            "already_in_progress": "Die Konfiguration l\u00e4uft bereits. Schlie\u00dfe die bestehende Konfiguration ab, bevor du erneut beginnst.",
+            "no_devices_found": "Keine Ger\u00e4te im Netzwerk gefunden",
+            "not_supported": "Ger\u00e4t nicht unterst\u00fctzt"
+        },
+        "flow_title": "{name}",
+        "step": {
+            "bluetooth_confirm": {
+                "description": "M\u00f6chtest du {name} einrichten?"
+            },
+            "user": {
+                "data": {
+                    "address": "Ger\u00e4t"
+                },
+                "description": "W\u00e4hle ein Ger\u00e4t zum Einrichten aus"
+            }
+        }
+    }
+}
