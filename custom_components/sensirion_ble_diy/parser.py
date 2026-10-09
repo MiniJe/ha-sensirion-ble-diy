@@ -1,9 +1,10 @@
 """Parser for Sensirion BLE advertisements.
 
-Extends the parser of the sensirion-ble library (which only knows sample
-types 4, 6 and 8) to the sample types published by Sensirion at
-https://sensirion.github.io/ble-services/#/live-data, so that DIY gadgets
-built with the Sensirion arduino-ble-gadget library are accepted too.
+Decodes the live data sample types published by Sensirion at
+https://sensirion.github.io/ble-services/#/live-data that the built-in
+sensirion_ble integration does not know, so that DIY gadgets built with the
+Sensirion arduino-ble-gadget library can be used. Sample types 4, 6 and 8
+(SHT3x, SHT4x and MyCO2 gadgets) are left to the built-in integration.
 
 Manufacturer data layout (company id 0x06D5), little endian:
   byte 0      advertising type (0)
@@ -51,8 +52,6 @@ def _tenths(ticks: int) -> float:
     return round(ticks / 10, 1)
 
 
-# Keys of temperature, humidity and CO2 are the ones the sensirion-ble library
-# uses, so entities of the gadgets it already supported keep their unique ids.
 TEMPERATURE = Signal(
     "temperature",
     SensorDeviceClass.TEMPERATURE,
@@ -64,13 +63,6 @@ HUMIDITY = Signal(
     SensorDeviceClass.HUMIDITY,
     Units.PERCENTAGE,
     lambda ticks: round(100.0 * ticks / FULL_SCALE, 2),
-)
-# SHT4x gadgets use the SHT4x raw humidity scale
-HUMIDITY_SHT4X = Signal(
-    "humidity",
-    SensorDeviceClass.HUMIDITY,
-    Units.PERCENTAGE,
-    lambda ticks: round(-6 + 125.0 * ticks / FULL_SCALE, 2),
 )
 CO2 = Signal(
     "carbon_dioxide",
@@ -124,13 +116,11 @@ PM10 = Signal(
     "PM10",
 )
 
-# Sample types 38 (air velocity) and 40 (H2, pressure) are left out: the
+# Sample types 4, 6 and 8 belong to the built-in sensirion_ble integration.
+# Types 38 (air velocity) and 40 (H2, pressure) are left out: the
 # specification gives no unit for them.
 SAMPLE_TYPES: dict[int, tuple[Signal, ...]] = {
     3: (TEMPERATURE, HUMIDITY, VOC),
-    4: (TEMPERATURE, HUMIDITY),
-    6: (TEMPERATURE, HUMIDITY_SHT4X),
-    8: (TEMPERATURE, HUMIDITY, CO2),
     10: (TEMPERATURE, HUMIDITY, CO2),
     12: (TEMPERATURE, HUMIDITY, CO2, PM25_FULL_SCALE),
     14: (TEMPERATURE, HUMIDITY, HCHO),

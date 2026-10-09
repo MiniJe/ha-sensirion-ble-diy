@@ -1,4 +1,4 @@
-"""Config flow for sensirion_ble."""
+"""Config flow for sensirion_ble_diy."""
 
 from typing import Any, override
 
@@ -17,7 +17,7 @@ from .parser import SensirionBluetoothDeviceData
 
 
 class SensirionConfigFlow(ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for sensirion_ble."""
+    """Handle a config flow for sensirion_ble_diy."""
 
     VERSION = 1
 

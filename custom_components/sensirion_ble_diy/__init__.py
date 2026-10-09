@@ -1,4 +1,4 @@
-"""The sensirion_ble integration."""
+"""The sensirion_ble_diy integration."""
 
 import logging
 
