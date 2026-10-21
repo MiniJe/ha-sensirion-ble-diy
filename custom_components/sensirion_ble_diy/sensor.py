@@ -17,6 +17,8 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.const import (
+    SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
+    EntityCategory,
     UnitOfDensity,
     UnitOfRatio,
     UnitOfTemperature,
@@ -47,17 +49,21 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=UnitOfRatio.PARTS_PER_MILLION,
         state_class=SensorStateClass.MEASUREMENT,
     ),
-    # the VOC and NOx indices have no unit and no matching device class
+    # the VOC and NOx indices and formaldehyde have no matching device class,
+    # so they are named and given an icon through their translation key
     "voc_index": SensorEntityDescription(
         key="voc_index",
+        translation_key="voc_index",
         state_class=SensorStateClass.MEASUREMENT,
     ),
     "nox_index": SensorEntityDescription(
         key="nox_index",
+        translation_key="nox_index",
         state_class=SensorStateClass.MEASUREMENT,
     ),
     "formaldehyde": SensorEntityDescription(
         key="formaldehyde",
+        translation_key="formaldehyde",
         native_unit_of_measurement=UnitOfRatio.PARTS_PER_BILLION,
         state_class=SensorStateClass.MEASUREMENT,
     ),
@@ -84,6 +90,15 @@ SENSOR_DESCRIPTIONS: dict[str, SensorEntityDescription] = {
         device_class=SensorDeviceClass.PM10,
         native_unit_of_measurement=UnitOfDensity.MICROGRAMS_PER_CUBIC_METER,
         state_class=SensorStateClass.MEASUREMENT,
+    ),
+    # added by BluetoothData.update for every advertisement
+    "signal_strength": SensorEntityDescription(
+        key="signal_strength",
+        device_class=SensorDeviceClass.SIGNAL_STRENGTH,
+        native_unit_of_measurement=SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
     ),
 }
 
@@ -115,9 +130,12 @@ def sensor_update_to_bluetooth_data_update(
             _device_key_to_bluetooth_entity_key(device_key): sensor_values.native_value
             for device_key, sensor_values in sensor_update.entity_values.items()
         },
+        # None leaves the name to the device class or the translation key, so
+        # it follows the language of Home Assistant; it also replaces the
+        # English names that version 2.0 stored for restoring
         entity_names={
-            _device_key_to_bluetooth_entity_key(device_key): sensor_values.name
-            for device_key, sensor_values in sensor_update.entity_values.items()
+            _device_key_to_bluetooth_entity_key(device_key): None
+            for device_key in sensor_update.entity_values
         },
     )
 

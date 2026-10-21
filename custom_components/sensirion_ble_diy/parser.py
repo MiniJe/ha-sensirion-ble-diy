@@ -22,7 +22,7 @@ import struct
 
 from bluetooth_data_tools import short_address
 from bluetooth_sensor_state_data import BluetoothData
-from home_assistant_bluetooth import BluetoothServiceInfo
+from habluetooth import BluetoothServiceInfo
 from sensor_state_data import SensorDeviceClass, Units
 
 _LOGGER = logging.getLogger(__name__)
@@ -31,6 +31,11 @@ COMPANY_IDENTIFIER = 0x06D5
 ADVERTISING_TYPE = 0x00
 HEADER_SIZE = 4
 FULL_SCALE = 2**16 - 1
+BUILT_IN_SAMPLE_TYPES = frozenset({4, 6, 8})
+ISSUE_TRACKER = "https://github.com/MiniJe/ha-sensirion-ble-diy/issues"
+
+# unknown sample types are reported once per run, not on every advertisement
+_reported_sample_types: set[int] = set()
 
 
 @dataclass(frozen=True)
@@ -149,7 +154,22 @@ def parse_advertisement(
     sample_type = raw_data[1]
     signals = SAMPLE_TYPES.get(sample_type)
     if signals is None:
-        _LOGGER.debug("Sample type %d not supported: %s", sample_type, raw_data.hex())
+        if (
+            sample_type not in BUILT_IN_SAMPLE_TYPES
+            and sample_type not in _reported_sample_types
+        ):
+            _reported_sample_types.add(sample_type)
+            _LOGGER.warning(
+                "A Sensirion gadget advertises sample type %d, which is not "
+                "decoded yet (advertisement %s). Please report it at %s",
+                sample_type,
+                raw_data.hex(),
+                ISSUE_TRACKER,
+            )
+        else:
+            _LOGGER.debug(
+                "Sample type %d not supported: %s", sample_type, raw_data.hex()
+            )
         return None
     if len(raw_data) < HEADER_SIZE + 2 * len(signals):
         _LOGGER.debug("Sample type %d too short: %s", sample_type, raw_data.hex())

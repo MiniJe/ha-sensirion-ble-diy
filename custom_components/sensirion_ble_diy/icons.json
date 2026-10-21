@@ -1,0 +1,15 @@
+{
+  "entity": {
+    "sensor": {
+      "formaldehyde": {
+        "default": "mdi:flask-outline"
+      },
+      "nox_index": {
+        "default": "mdi:smog"
+      },
+      "voc_index": {
+        "default": "mdi:molecule"
+      }
+    }
+  }
+}

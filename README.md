@@ -41,7 +41,8 @@ are not decoded: the specification gives no unit for those signals.
   arduino-ble-gadget (`DataType::T_RH_CO2_VOC_PM25_HCHO`), received through an
   ESPHome Bluetooth proxy, on Home Assistant 2026.9.
 All other sample types are implemented from the specification and have not
-been checked against real hardware. Reports are welcome.
+been checked against real hardware. Reports are welcome, see
+[Reporting a sample type](#reporting-a-sample-type).
 
 ## Installation
 
@@ -75,6 +76,20 @@ the device added through it, then add the gadget again.
   advertisement.
 - The VOC and NOx indices and formaldehyde (ppb) have no matching device
   class in Home Assistant, so they are plain measurement sensors.
+- Each gadget also has a signal strength (RSSI) sensor, disabled by default.
+  Enable it on the device page to see how well the Bluetooth adapter or proxy
+  receives the gadget.
+
+## Reporting a sample type
+
+A gadget with a sample type this integration does not decode is not set up;
+instead Home Assistant logs a warning once with the sample type and the raw
+advertisement. For a gadget that is set up, the device page offers
+*Download diagnostics* with the last advertisement, raw and decoded.
+
+Open a [sample type report](https://github.com/MiniJe/ha-sensirion-ble-diy/issues/new?template=sample_type.yml)
+with that data and, if possible, the values the gadget or the MyAmbience app
+shows at the same time.
 
 ## Credits and license
 

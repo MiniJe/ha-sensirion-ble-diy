@@ -1,0 +1,32 @@
+name: Sample type report
+description: A gadget whose sample type is not decoded, or decoded with wrong values
+body:
+  - type: input
+    id: sample_type
+    attributes:
+      label: Sample type
+      description: The number from the log warning or from the diagnostics.
+    validations:
+      required: true
+  - type: input
+    id: hardware
+    attributes:
+      label: Sensors and firmware
+      description: For example "ESP32 + SEN66, arduino-ble-gadget 1.5.0, DataType::T_RH_CO2_VOC_NOX_PM25".
+    validations:
+      required: true
+  - type: textarea
+    id: advertisement
+    attributes:
+      label: Advertisement data
+      description: >-
+        The hex data from the log warning, or the diagnostics file
+        (device page → ⋮ → Download diagnostics) if the gadget was set up.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected values
+      description: What the gadget or the MyAmbience app shows at the same time, if you know it.
