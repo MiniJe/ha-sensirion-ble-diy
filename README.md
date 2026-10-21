@@ -45,8 +45,14 @@ been checked against real hardware. Reports are welcome.
 
 ## Installation
 
-**HACS:** add this repository as a custom repository of type *Integration*,
-install it and restart Home Assistant.
+**HACS (recommended):** the integration is in the HACS default catalog. Open
+HACS, search for **Sensirion BLE DIY gadgets**, download it and restart Home
+Assistant. Or open it in HACS directly:
+
+[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MiniJe&repository=ha-sensirion-ble-diy&category=integration)
+
+If you added this repository earlier as a custom repository, you can remove
+it from HACS' custom repositories; the installed integration is not affected.
 
 **Manual:** copy `custom_components/sensirion_ble_diy` into the
 `custom_components` folder of your Home Assistant configuration and restart.
